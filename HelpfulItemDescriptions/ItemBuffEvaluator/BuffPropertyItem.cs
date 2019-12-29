@@ -16,9 +16,9 @@ namespace HelpfulItemDescriptions
     {
         public readonly string Property;
 
-        public readonly int BaseAmount;
+        public readonly double BaseAmount;
 
-        public readonly int StackIncrease;
+        public readonly double StackIncrease;
 
         public readonly string Formula;
 
@@ -26,7 +26,7 @@ namespace HelpfulItemDescriptions
 
         public readonly TextStyle TextStyle;
 
-        public BuffPropertyItem(string property, int baseAmount, int stackIncrease = 0, string formula = null, string unit = "%", TextStyle style = TextStyle.None)
+        public BuffPropertyItem(string property, double baseAmount, double stackIncrease = 0, string formula = null, string unit = "%", TextStyle style = TextStyle.None)
         {
             Property = property;
             BaseAmount = baseAmount;

@@ -70,6 +70,8 @@ namespace HelpfulItemDescriptions
                 PlayerCharacterMasterController.instances[0].master.inventory.GiveItem(ItemIndex.Bear, 1);
                 PlayerCharacterMasterController.instances[0].master.inventory.GiveItem(ItemIndex.CritGlasses, 1);
                 PlayerCharacterMasterController.instances[0].master.inventory.GiveItem(ItemIndex.IgniteOnKill, 1);
+                PlayerCharacterMasterController.instances[0].master.inventory.GiveItem(ItemIndex.Hoof, 1);
+                PlayerCharacterMasterController.instances[0].master.inventory.GiveItem(ItemIndex.ExplodeOnDeath, 1);
             }
         }
 
@@ -85,7 +87,6 @@ namespace HelpfulItemDescriptions
 
             On.RoR2.Language.GetString_string += (orig, self) =>
             {
-                //if ((self.ToLower().StartsWith("item") || self.ToLower().StartsWith("equipment")) && self.ToLower().EndsWith("pickup"))
                 if (_languageItemPickupRegex.IsMatch(self))
                 {
                     var ii = GetItemFromFriendlyName(self);
@@ -158,7 +159,18 @@ namespace HelpfulItemDescriptions
             _itemCalculations.Add(ItemIndex.IgniteOnKill, new ItemBuffEvaluator(ItemIndex.IgniteOnKill, ItemCatalog.GetItemDef(ItemIndex.IgniteOnKill), new List<BuffPropertyItem>()
             {
                 { new BuffPropertyItem("Damage", 150, 75, ItemFormulas.Linear, "%", TextStyle.Damage) },
-                { new BuffPropertyItem("Radius", 12, 4, ItemFormulas.Linear, "m", TextStyle.Stack) }
+                { new BuffPropertyItem("Radius", 12, 4, ItemFormulas.Linear, "m", TextStyle.Damage) }
+            }));
+
+            _itemCalculations.Add(ItemIndex.Hoof, new ItemBuffEvaluator(ItemIndex.Hoof, ItemCatalog.GetItemDef(ItemIndex.Hoof), new List<BuffPropertyItem>()
+            {
+                { new BuffPropertyItem("Movement Speed", 14, 14, ItemFormulas.Linear, "%", TextStyle.Utility) }
+            }));
+
+            _itemCalculations.Add(ItemIndex.ExplodeOnDeath, new ItemBuffEvaluator(ItemIndex.ExplodeOnDeath, ItemCatalog.GetItemDef(ItemIndex.ExplodeOnDeath), new List<BuffPropertyItem>()
+            {
+                { new BuffPropertyItem("Damage", 350, 280, ItemFormulas.Linear, "%", TextStyle.Damage) },
+                { new BuffPropertyItem("Radius", 12, 2.4, ItemFormulas.Linear, "m", TextStyle.Damage) }
             }));
         }
 
