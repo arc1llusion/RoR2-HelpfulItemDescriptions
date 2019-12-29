@@ -100,7 +100,7 @@ namespace HelpfulItemDescriptions
 
                         foreach (var r in results)
                         {
-                            newDescription += String.Format("{0} modified by {1}{2}{3}", r.Property, r.Result.ToString("0.##"), r.Unit, Environment.NewLine);
+                            newDescription += String.Format("{0} modified by {1}{2}", r.Property, StyleText(r.Result.ToString("0.##") + r.Unit, r.TextStyle), Environment.NewLine);
                         }
 
                         return newDescription;
@@ -109,6 +109,30 @@ namespace HelpfulItemDescriptions
 
                 return orig(self);
             };
+        }
+
+        private string StyleText(string s, TextStyle style)
+        {
+            string result = String.Empty;
+            switch(style) {
+                case TextStyle.Damage:
+                    result = String.Format("<style=cIsDamage>{0}</style>", s);
+                    break;
+                case TextStyle.Healing:
+                    result = String.Format("<style=cIsHealing>{0}</style>", s);
+                    break;
+                case TextStyle.Stack:
+                    result = String.Format("<style=cStack>{0}</style>", s);
+                    break;
+                case TextStyle.Utility:
+                    result = String.Format("<style=cIsUtility>{0}</style>", s);
+                    break;
+                case TextStyle.None:
+                    result = s;
+                    break;
+            }
+
+            return result;
         }
 
         private void DebugChat(object message)
@@ -123,18 +147,18 @@ namespace HelpfulItemDescriptions
         {
             _itemCalculations.Add(ItemIndex.Bear, new ItemBuffEvaluator(ItemIndex.Bear, ItemCatalog.GetItemDef(ItemIndex.Bear), new List<BuffPropertyItem>()
             {
-                { new BuffPropertyItem("Chance to block damage", 15, 0, ItemFormulas.Hyperbolic, "%") }
+                { new BuffPropertyItem("Chance to block damage", 15, 0, ItemFormulas.Hyperbolic, "%", TextStyle.Healing ) }
             }));
 
             _itemCalculations.Add(ItemIndex.CritGlasses, new ItemBuffEvaluator(ItemIndex.CritGlasses, ItemCatalog.GetItemDef(ItemIndex.CritGlasses), new List<BuffPropertyItem>()
             {
-                { new BuffPropertyItem("Crit Chance", 10, 10, ItemFormulas.Linear, "%") }
+                { new BuffPropertyItem("Crit Chance", 10, 10, ItemFormulas.Linear, "%", TextStyle.Damage) }
             }));
 
             _itemCalculations.Add(ItemIndex.IgniteOnKill, new ItemBuffEvaluator(ItemIndex.IgniteOnKill, ItemCatalog.GetItemDef(ItemIndex.IgniteOnKill), new List<BuffPropertyItem>()
             {
-                { new BuffPropertyItem("Damage", 150, 75, ItemFormulas.Linear, "%") },
-                { new BuffPropertyItem("Radius", 12, 4, ItemFormulas.Linear, "m") }
+                { new BuffPropertyItem("Damage", 150, 75, ItemFormulas.Linear, "%", TextStyle.Damage) },
+                { new BuffPropertyItem("Radius", 12, 4, ItemFormulas.Linear, "m", TextStyle.Stack) }
             }));
         }
 

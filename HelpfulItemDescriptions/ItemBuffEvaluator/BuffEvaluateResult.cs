@@ -5,5 +5,6 @@
         public string Property;
         public string Unit;
         public double Result;
+        public TextStyle TextStyle;
     }
 }
