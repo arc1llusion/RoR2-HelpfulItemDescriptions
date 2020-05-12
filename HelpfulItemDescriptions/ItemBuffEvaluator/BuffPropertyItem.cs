@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NCalc;
+using System;
 using System.Data;
 
 namespace HelpfulItemDescriptions
@@ -56,7 +57,9 @@ namespace HelpfulItemDescriptions
             else
             {
                 string evalString = ItemConstants.ReplaceFields(this, stackCount);
-                result = Convert.ToDouble(new DataTable().Compute(evalString, null));
+                Expression e = new Expression(evalString);
+                
+                result = Convert.ToDouble(e.Evaluate());
             }
 
             return new BuffEvaluateResult() { Property = Property, Result = result, Unit = Unit, TextStyle = TextStyle };

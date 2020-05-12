@@ -6,13 +6,11 @@ namespace HelpfulItemDescriptions
 {
     public class ItemBuffEvaluator
     {
-        public readonly ItemDef ItemDefinition;
-
         public readonly ItemIndex ItemIndex;
 
         private List<BuffPropertyItem> _properties;
 
-        public ItemBuffEvaluator(ItemIndex ii, ItemDef itemDef, List<BuffPropertyItem> buffProperties)
+        public ItemBuffEvaluator(ItemIndex ii, List<BuffPropertyItem> buffProperties)
         {
             ItemIndex = ii;
             _properties = buffProperties;
